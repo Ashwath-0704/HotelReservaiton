@@ -45,4 +45,30 @@ public class HotelReservationSystemMain {
 		return storedCheapRateHotel.stream().filter(results -> results.getTotalRate() == storedCheapRateHotel.get(0).getTotalRate()).collect(Collectors.toList());
 	}
 
+	public static List<Hotel> findTheCheapestBestRatingHotel(CustomerType customerType, String stateDate,
+			String endDate) throws HotelReservationException {
+		if (customerType != null) {
+			List<Hotel> storedCheapRateHotel = hotel_list.stream().map(hotelData -> {
+				Hotel result = new Hotel();
+				result.setName(hotelData.getName());
+				result.setTotalRate(
+						hotelData.checkCustomerTypeAndRetrunTotalRateForDataRange(customerType, stateDate, endDate));
+				result.setTypeOfCustomer(customerType);
+				result.setRating(hotelData.getRating());
+				result.setRegularWeekDayRate(hotelData.getRegularWeekDayRate());
+				result.setRegularWeekEndRate(hotelData.getRegularWeekEndRate());
+				result.setRewardWeekDayRate(hotelData.getRewardWeekDayRate());
+				result.setRewardWeekEndRates(hotelData.getRewardWeekEndRates());
+				return result;
+			}).sorted(Comparator.comparing(Hotel::getTotalRate).thenComparing(Hotel::getRating,Comparator.reverseOrder())).collect(Collectors.toList());
+
+			return storedCheapRateHotel.stream()
+					.filter(results -> results.getTotalRate() == storedCheapRateHotel.get(0).getTotalRate()
+							&& results.getRating() == storedCheapRateHotel.get(0).getRating())
+					.collect(Collectors.toList());
+		}
+		throw new HotelReservationException("Invaid input");
+
+	}
+
 }

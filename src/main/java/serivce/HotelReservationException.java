@@ -4,6 +4,7 @@ public class HotelReservationException extends Exception {
 	
 	/**
 	 * construtor
+	 * 
 	 * @param string
 	 */
 	public HotelReservationException(String message) {

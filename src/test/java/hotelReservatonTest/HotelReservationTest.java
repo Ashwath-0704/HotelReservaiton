@@ -26,8 +26,7 @@ public class HotelReservationTest {
 	@Test
 	public void findTheCheapestHotelAndTotalCostREGULARTest() {
 		HotelReservationSystemMain.addHotels();
-		List<Hotel> cheapHotel = HotelReservationSystemMain.findTheCheapestHotelAndTotalCost(CustomerType.REGULAR,
-				"10-Sep-2022", "11-Sep-2022");
+		List<Hotel> cheapHotel = HotelReservationSystemMain.findTheCheapestHotelAndTotalCost(CustomerType.REGULAR,"10-Sep-2022", "11-Sep-2022");
 		Assert.assertEquals(200, cheapHotel.get(0).getTotalRate(), cheapHotel.get(1).getTotalRate());
 //		Output:-
 //				The total number of the days is : 1
@@ -39,12 +38,26 @@ public class HotelReservationTest {
 	@Test
 	public void findTheCheapestHotelAndTotalCostREWARDTest() {
 		HotelReservationSystemMain.addHotels();
-		List<Hotel> cheapHotel = HotelReservationSystemMain.findTheCheapestHotelAndTotalCost(CustomerType.REWARD,
-				"10-Sep-2022", "11-Sep-2022");
+		List<Hotel> cheapHotel = HotelReservationSystemMain.findTheCheapestHotelAndTotalCost(CustomerType.REWARD,"10-Sep-2022", "11-Sep-2022");
 		Assert.assertEquals(140, cheapHotel.get(0).getTotalRate());
 //		Output:-
 //				The total number of the days is : 1
 //				Hotel [name=Ridgewood, typeOfCustomer=REWARD, totalRate=140, rating=5, rewardWeekDayRate=100, rewardWeekEndRates=40, regularWeekDayRate=220, regularWeekEndRate=150]
 
 	}
+
+	@Test
+	public void findTheCheaptestBestRatingHotelREWARDTest() {
+		try {
+			HotelReservationSystemMain.addHotels();
+			List<Hotel> cheapHotelRating = HotelReservationSystemMain.findTheCheapestBestRatingHotel(CustomerType.REWARD, "10-Sep-2022", "11-Sep-2022");
+			Assert.assertEquals(5, cheapHotelRating.get(0).getRating());
+		} catch (HotelReservationException e) {
+			System.err.println("Invalid user input");
+		}
+
+//		Output:-
+//			Hotel [name=Ridgewood, typeOfCustomer=REWARD, totalRate=140, rating=5, rewardWeekDayRate=100, rewardWeekEndRates=40, regularWeekDayRate=220, regularWeekEndRate=150]	}
+	}
+
 }
