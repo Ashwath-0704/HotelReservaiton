@@ -19,7 +19,7 @@ public class HotelReservationSystemMain {
 	static Scanner sc = new Scanner(System.in);
 
 	/*
-	 * UC1
+	 * UC1 and UC3
 	 */
 	public static boolean addHotels() {
 		Hotel Hotel1 = new Hotel("Bridgewood", 150, 50, 4);
