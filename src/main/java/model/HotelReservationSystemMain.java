@@ -13,13 +13,16 @@ import serivce.Hotel;
 
 
 public class HotelReservationSystemMain {
-
 	private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
 	static ArrayList<Hotel> hotel_list = new ArrayList<>();
 	static Scanner sc = new Scanner(System.in);
 
 	/*
-	 * UC1 and UC3
+	 * UC1 :-Ability to add Hotel in a Hotel Reservation System with Name and rates for Regular Customer...
+	 * 
+	 * UC3 :- Ability to add weekday and weekend rates for each Hotel
+	 * 
+	 * UC5 :- Ability to add ratings to each Hotel
 	 */
 	public static boolean addHotels() {
 		Hotel Hotel1 = new Hotel("Bridgewood", 150, 50, 4);
@@ -33,7 +36,7 @@ public class HotelReservationSystemMain {
 	}
 
 	/*
-	 * UC2 and UC4
+	 * UC2, UC4
 	 */
 	public static boolean findTheCheaptestHotelAndTotalCost(String stateDate, String endDate) {
 		LocalDate stateDateLD = LocalDate.parse(stateDate, DATE_FORMAT);
@@ -53,5 +56,6 @@ public class HotelReservationSystemMain {
 		storedCheapRateHotel1.forEach(System.out::println);
 		return true;
 	}
+
 
 }
