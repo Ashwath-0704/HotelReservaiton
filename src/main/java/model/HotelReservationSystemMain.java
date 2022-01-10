@@ -1,20 +1,19 @@
 package model;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
+import serivce.CustomerType;
 import serivce.Hotel;
+import serivce.HotelReservationException;
+
 
 
 public class HotelReservationSystemMain {
 
-	private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
 	static ArrayList<Hotel> hotel_list = new ArrayList<>();
 	static Scanner sc = new Scanner(System.in);
 
@@ -27,4 +26,23 @@ public class HotelReservationSystemMain {
 		hotel_list.add(Hotel3);
 		return true;
 	}
+
+	public static List<Hotel> findTheCheapestHotelAndTotalCost(CustomerType customerType, String stateDate,String endDate) {
+		List<Hotel> storedCheapRateHotel = hotel_list.stream().map(hotelData -> {
+			Hotel result = new Hotel();
+			result.setName(hotelData.getName());
+			result.setTotalRate(
+					hotelData.checkCustomerTypeAndRetrunTotalRateForDataRange(customerType, stateDate, endDate));
+			result.setTypeOfCustomer(customerType);
+			result.setRating(hotelData.getRating());
+			result.setRegularWeekDayRate(hotelData.getRegularWeekDayRate());
+			result.setRegularWeekEndRate(hotelData.getRegularWeekEndRate());
+			result.setRewardWeekDayRate(hotelData.getRewardWeekDayRate());
+			result.setRewardWeekEndRates(hotelData.getRewardWeekEndRates());
+			return result;
+		}).sorted(Comparator.comparing(Hotel::getTotalRate)).collect(Collectors.toList());
+
+		return storedCheapRateHotel.stream().filter(results -> results.getTotalRate() == storedCheapRateHotel.get(0).getTotalRate()).collect(Collectors.toList());
+	}
+
 }

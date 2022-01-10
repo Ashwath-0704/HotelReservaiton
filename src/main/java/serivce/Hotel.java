@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
-
 public class Hotel {
 	
 	private String name;
@@ -137,5 +136,35 @@ public class Hotel {
 				+ ", regularWeekDayRate=" + regularWeekDayRate + ", regularWeekEndRate=" + regularWeekEndRate + "]";
 	}
 
+	/*
+	 * This function Takes input three parameters as (customer type and date range).
+	 * Using ChronoUnit finding the gap between the data range. // (eg:- 2 day)
+	 * checking for customer type and calculating Total rate (totalRate = rate * days) // (eg:- Tr = 250*2 )
+	 * .
+	 * Return an Total rate. // (eg:- r:- 500)
+	 */
+	public long checkCustomerTypeAndRetrunTotalRateForDataRange(CustomerType customerType, String stateDate,String endDate) {
+		final LocalDate stateDateLD = LocalDate.parse(stateDate, DATE_FORMAT);
+		final LocalDate endDateLD = LocalDate.parse(endDate, DATE_FORMAT);
+		
+		final long daysBetween = (int) ChronoUnit.DAYS.between(stateDateLD, endDateLD);
+		
+		if (customerType.equals(CustomerType.REWARD)) {
+			if (stateDateLD.getDayOfWeek().equals(DayOfWeek.SATURDAY)|| endDateLD.getDayOfWeek().equals(DayOfWeek.SUNDAY)) {
+				setTotalRate(getRewardWeekEndRates() + getRewardWeekDayRate()* daysBetween);
+			} else {
+				setTotalRate(getRewardWeekDayRate() + getRewardWeekEndRates()* daysBetween);
+			}
+		} else if (customerType.equals(CustomerType.REGULAR)) {
+			if (stateDateLD.getDayOfWeek().equals(DayOfWeek.SATURDAY)
+					|| endDateLD.getDayOfWeek().equals(DayOfWeek.SUNDAY)) {
+				setTotalRate(getRegularWeekEndRate() + getRegularWeekDayRate()* daysBetween);
+			} else {
+				setTotalRate(getRegularWeekDayRate()+ getRegularWeekEndRate() * daysBetween);
+			}
+		}
+
+		return getTotalRate();
+	}
 
 }
