@@ -33,7 +33,7 @@ public class HotelReservationSystemMain {
 	}
 
 	/*
-	 * UC2
+	 * UC2 and UC4
 	 */
 	public static boolean findTheCheaptestHotelAndTotalCost(String stateDate, String endDate) {
 		LocalDate stateDateLD = LocalDate.parse(stateDate, DATE_FORMAT);
