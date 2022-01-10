@@ -13,14 +13,12 @@ import serivce.Hotel;
 
 
 public class HotelReservationSystemMain {
-	
 	private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
 	static ArrayList<Hotel> hotel_list = new ArrayList<>();
 	static Scanner sc = new Scanner(System.in);
-
+	
 	/*
-	 * UC1 :-Ability to add Hotel in a Hotel Reservation System with Name and rates
-	 * for Regular Customer...
+	 * UC1 :-Ability to add Hotel in a Hotel Reservation System with Name and rates for Regular Customer...
 	 * 
 	 * UC3 :- Ability to add weekday and weekend rates for each Hotel
 	 * 
@@ -40,8 +38,8 @@ public class HotelReservationSystemMain {
 	/*
 	 * UC2 :- Ability to find the cheapest Hotel for a given Date Range
 	 * 
-	 * UC4 :- Ability to find the cheapest Hotel for a given Date Range based on
-	 * weekday and weekend - I/P – 11Sep2020, 12Sep2020
+	 * UC4 :- Ability to find the cheapest Hotel for a given Date Range based on weekday and weekend - I/P – 11Sep2020, 12Sep2020
+	 * 
 	 */
 	public static boolean findTheCheaptestHotelAndTotalCost(String stateDate, String endDate) {
 		LocalDate stateDateLD = LocalDate.parse(stateDate, DATE_FORMAT);
@@ -82,6 +80,30 @@ public class HotelReservationSystemMain {
 			return result;
 		}).sorted(Comparator.comparing(Hotel::getTotalRate).thenComparing(Hotel::getRating))
 				.collect(Collectors.toList());
+		System.out.printf("The total number of the days is : %d\n", daysBetween);
+		storedCheapRateHotel.forEach(System.out::println);
+		return true;
+	}
+
+	/**
+	 * UC7 :- Ability to find the Best Rated Hotel for a given Date Range
+	 * 
+	 */
+	public static boolean findTheBestRatingHotel(String stateDate, String endDate) {
+
+		final LocalDate stateDateLD = LocalDate.parse(stateDate, DATE_FORMAT);
+		final LocalDate endDateLD = LocalDate.parse(endDate, DATE_FORMAT);
+		int daysBetween = (int) ChronoUnit.DAYS.between(stateDateLD, endDateLD);
+		List<Object> storedCheapRateHotel = hotel_list.stream().map(hotelData -> {
+			Hotel result = new Hotel();
+			result.setName(hotelData.getName());
+			result.setTotalRate(hotelData.getWeekendRate() + hotelData.getWeekdayRate() * daysBetween);
+			result.setTypeOfCustomer(hotelData.getTypeOfCustomer());
+			result.setWeekdayRate(hotelData.getWeekdayRate());
+			result.setWeekendRate(hotelData.getWeekendRate());
+			result.setRating(hotelData.getRating());
+			return result;
+		}).sorted(Comparator.comparing(Hotel::getRating).reversed()).collect(Collectors.toList());
 		System.out.printf("The total number of the days is : %d\n", daysBetween);
 		storedCheapRateHotel.forEach(System.out::println);
 		return true;

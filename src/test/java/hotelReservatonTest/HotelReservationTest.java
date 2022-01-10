@@ -27,4 +27,23 @@ public class HotelReservationTest {
 //				Hotel [name=Lakewood, totalRate=200, weekendRate=110, weekdayRate=90, rating=3]
 
 	}
+
+	@Test
+	public void findTheCheaptestBestRatingHotelTest() {
+		HotelReservationSystemMain.addHotels();
+		boolean cheapHotelRating = HotelReservationSystemMain.findTheCheaptestBestRatingHotel("11-Sep-2020",
+				"12-Sep-2020");
+		Assert.assertEquals(true, cheapHotelRating);
+//		Output:-
+//				Hotel [name=Lakewood, totalRate=200, weekendRate=110, weekdayRate=90, rating=3]
+	}
+
+	@Test
+	public void findTheBestRatingHotelTest() {
+		HotelReservationSystemMain.addHotels();
+		boolean bestRatingHotel = HotelReservationSystemMain.findTheBestRatingHotel("11-Sep-2020", "12-Sep-2020");
+		Assert.assertEquals(true, bestRatingHotel);
+
+//		O/P:- Hotel [name=Ridgewood, totalRate=370, weekendRate=220, weekdayRate=150, rating=5]
+	}
 }
