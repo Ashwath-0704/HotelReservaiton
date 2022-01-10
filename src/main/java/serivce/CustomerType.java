@@ -1,5 +1,5 @@
 package serivce;
 
 public enum CustomerType {
-		REGULAR,REWARD;
+		REGULAR,REWARD
 }

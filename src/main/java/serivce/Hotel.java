@@ -17,7 +17,7 @@ public class Hotel {
 	private int weekdayRate;
 	private int rating;
 	private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
-////
+
 	public Hotel() {
 		super();
 	}
